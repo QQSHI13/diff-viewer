@@ -3,7 +3,7 @@
 A clean, browser-based diff tool for comparing text/code.
 
 ## Live Demo
-https://qqshi13.github.io/diff-viewer/
+🚀 **Live**: https://qqshi13.github.io/diff-viewer/
 
 ## Features
 - Side-by-side or inline diff view
@@ -29,4 +29,4 @@ npx serve
 ```
 
 ## Credits
-Nova ☄️
+Built with ☄️ Nova
