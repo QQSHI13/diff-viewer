@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diff Viewer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Diff Viewer</h1>
+            <p class="subtitle">Compare text and code side by side</p>
+        </header>
+
+        <div class="toolbar">
+            <div class="view-modes">
+                <button id="btn-split" class="active">Split</button>
+                <button id="btn-inline">Inline</button>
+            </div>
+            <div class="actions">
+                <button id="btn-swap">⇄ Swap</button>
+                <button id="btn-clear">Clear</button>
+                <button id="btn-copy">Copy Result</button>
+                <button id="btn-share">Share URL</button>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-pane">
+                <div class="input-header">
+                    <label>Original</label>
+                    <button class="btn-paste" data-target="original">Paste</button>
+                </div>
+                <textarea id="original" placeholder="Paste original text here..."></textarea>
+            </div>
+            <div class="input-pane">
+                <div class="input-header">
+                    <label>Modified</label>
+                    <button class="btn-paste" data-target="modified">Paste</button>
+                </div>
+                <textarea id="modified" placeholder="Paste modified text here..."></textarea>
+            </div>
+        </div>
+
+        <div class="stats" id="stats">
+            <span id="added-count">+0 added</span>
+            <span id="removed-count">−0 removed</span>
+            <span id="unchanged-count">0 unchanged</span>
+        </div>
+
+        <div class="diff-output" id="diff-output">
+            <div class="diff-placeholder">
+                Enter text in both fields to see the diff
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/diff-match-patch/20121119/diff_match_patch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
