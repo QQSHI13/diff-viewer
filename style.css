@@ -48,6 +48,15 @@ header h1 {
     font-size: 14px;
 }
 
+.subtitle a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.subtitle a:hover {
+    text-decoration: underline;
+}
+
 /* Toolbar */
 .toolbar {
     display: flex;
