@@ -17,7 +17,6 @@ let diffData = null;
 
 // Initialize
 function init() {
-    loadFromURL();
     setupEventListeners();
     debouncedComputeDiff();
 }
@@ -31,7 +30,6 @@ function setupEventListeners() {
     document.getElementById('btn-swap').addEventListener('click', swapInputs);
     document.getElementById('btn-clear').addEventListener('click', clearInputs);
     document.getElementById('btn-copy').addEventListener('click', copyResult);
-    document.getElementById('btn-share').addEventListener('click', shareURL);
 
     document.querySelectorAll('.btn-paste').forEach(btn => {
         btn.addEventListener('click', () => pasteFromClipboard(btn.dataset.target));
@@ -267,6 +265,14 @@ async function pasteFromClipboard(target) {
 }
 
 function copyResult() {
+    const original = originalInput.value;
+    const modified = modifiedInput.value;
+    
+    if (!original && !modified) {
+        showToast('Nothing to copy');
+        return;
+    }
+    
     const text = generatePlainTextDiff();
     navigator.clipboard.writeText(text).then(() => {
         showToast('Copied to clipboard');
@@ -288,33 +294,6 @@ function generatePlainTextDiff() {
             return `  ${line}`;
         }).join('\n');
     }).join('\n');
-}
-
-function shareURL() {
-    const original = btoa(unescape(encodeURIComponent(originalInput.value)));
-    const modified = btoa(unescape(encodeURIComponent(modifiedInput.value)));
-    
-    const url = new URL(window.location.href);
-    url.searchParams.set('o', original);
-    url.searchParams.set('m', modified);
-    
-    window.history.replaceState({}, '', url);
-    navigator.clipboard.writeText(url.toString()).then(() => {
-        showToast('Shareable URL copied!');
-    });
-}
-
-function loadFromURL() {
-    const url = new URL(window.location.href);
-    const original = url.searchParams.get('o');
-    const modified = url.searchParams.get('m');
-    
-    if (original) {
-        originalInput.value = decodeURIComponent(escape(atob(original)));
-    }
-    if (modified) {
-        modifiedInput.value = decodeURIComponent(escape(atob(modified)));
-    }
 }
 
 function escapeHtml(text) {
