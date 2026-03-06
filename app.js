@@ -36,6 +36,16 @@ function setupEventListeners() {
     });
 }
 
+function splitLines(text) {
+    if (!text) return [];
+    const lines = text.split('\n');
+    // Remove trailing empty lines caused by trailing newlines
+    while (lines.length > 0 && lines[lines.length - 1] === '') {
+        lines.pop();
+    }
+    return lines;
+}
+
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -92,10 +102,7 @@ function renderSplitView(diffs) {
 
     diffs.forEach(([type, text]) => {
         if (!text) return;
-        const lines = text.split('\n');
-        if (lines[lines.length - 1] === '') {
-            lines.pop();
-        }
+        const lines = splitLines(text);
 
         lines.forEach(line => {
             if (type === 0) { // Equal
@@ -183,10 +190,7 @@ function renderInlineView(diffs) {
 
     diffs.forEach(([type, text]) => {
         if (!text) return;
-        const lines = text.split('\n');
-        if (lines[lines.length - 1] === '') {
-            lines.pop();
-        }
+        const lines = splitLines(text);
 
         lines.forEach(line => {
             let typeClass = 'unchanged';
@@ -221,8 +225,7 @@ function updateStats(diffs) {
 
     diffs.forEach(([type, text]) => {
         if (!text) return;
-        const lines = text.split('\n');
-        if (lines[lines.length - 1] === '') lines.pop();
+        const lines = splitLines(text);
         const count = lines.length;
         
         if (type === 1) added += count;
@@ -289,8 +292,7 @@ function generatePlainTextDiff() {
     if (!diffData) return '';
     
     return diffData.map(([type, text]) => {
-        const lines = text.split('\n');
-        if (lines[lines.length - 1] === '') lines.pop();
+        const lines = splitLines(text);
         
         return lines.map(line => {
             if (type === -1) return `- ${line}`;
